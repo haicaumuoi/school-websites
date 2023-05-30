@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Layout, Menu } from 'antd';
+import { Button, Image, Layout, Menu } from 'antd';
 import { UserOutlined, HomeOutlined, SettingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleDarkMode } from '../../redux/slices/darkModeSlice';
+import schoolLogo from '../../assets/school-logo.png';
 
 const { Header } = Layout;
 
@@ -16,22 +17,26 @@ const HeaderComponent = () => {
     };
 
     return (
-        <Header className='px-20'>
-            <Menu theme={isDarkMode ? 'dark' : 'light'} mode="horizontal" defaultSelectedKeys={['1']}>
-                <Menu.Item key="1" icon={<HomeOutlined />}>
-                    Home
+        <Header className='flex justify-between items-center h-24 bg-white'>
+                <img
+                    width={100}
+                    src={schoolLogo}
+                />
+            <Menu mode="horizontal" className='w-6/12 h-10'>
+                <Menu.Item  key="1" className='font-black text-xl uppercase'>
+                    Discover
                 </Menu.Item>
-                <Menu.Item key="2" icon={<UserOutlined />}>
-                    Profile
+                <Menu.Item key="2"    className='font-black text-xl uppercase'>
+                    Learning
                 </Menu.Item>
-                <Menu.Item key="3" icon={<SettingOutlined />}>
-                    Settings
+                <Menu.Item key="3"    className='font-black text-xl uppercase'>
+                    Community
                 </Menu.Item>
-                <Menu.Item key="4">
-                    <Button>Logout</Button>
+                <Menu.Item key="4"    className='font-black text-xl uppercase'>
+                    Connect
                 </Menu.Item>
-                <Menu.Item key="5">
-                    <Button onClick={handleToggleDarkMode}>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</Button>
+                <Menu.Item key="5"    className='font-black text-xl uppercase'>
+                    Enroll
                 </Menu.Item>
             </Menu>
         </Header>

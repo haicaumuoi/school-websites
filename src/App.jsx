@@ -14,18 +14,7 @@ function App() {
 const isDarkMode = useSelector(state => state.darkMode);
 
 // Determine which algorithm to use
-const { defaultAlgorithm, darkAlgorithm } = theme;
-
-// Update routeList based on userType
-useEffect(() => {
-  switch (userType) {
-    case 'admin':
-      setRouteList(adminRoutes);
-      break;
-    default:
-      break;
-  }
-}, [userType]);
+const { defaultAlgorithm, darkAlgorithm, } = theme;
 
  const [routeList, setRouteList] = useState([]);
   const authenticated = true;
@@ -47,6 +36,9 @@ useEffect(() => {
       theme={{
         algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
         token: {
+          colorBgBase: '#fff',
+          colorBgLayout: '#fff',
+          colorPrimary: '#ffec3d',
         }
       }}>
       <Routes>
