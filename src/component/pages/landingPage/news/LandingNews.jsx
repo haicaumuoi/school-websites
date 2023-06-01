@@ -1,28 +1,68 @@
-import React from "react";
 import { grey } from "@ant-design/colors";
-import { Image, Space, Typography, theme } from "antd";
-import picture from "./img/img1.jpg";
+import { Space, Typography } from "antd";
+import React, { useRef } from "react";
+import { news } from "./newsConst";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
 
 const { Text, Title } = Typography;
 
 const LandingNews = () => {
-  const school = [
-    {
-      title: "Elementary School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-    {
-      title: "Secondary School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-    {
-      title: "High School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-  ];
+  const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+  const swipeableViewsRef = useRef(null);
+
+  const itemsPerSlide = 4;
+
+  const renderCarouselItems = () => {
+    const totalItems = news.length;
+    const totalSlides = Math.ceil(totalItems / itemsPerSlide);
+    const carouselItems = [];
+
+    for (let i = 0; i < totalSlides; i++) {
+      const startIndex = i * itemsPerSlide;
+      const endIndex = startIndex + itemsPerSlide;
+      const slideItems = news.slice(startIndex, endIndex);
+
+      const slide = (
+        <div className="carousel-slide flex" key={i}>
+          {slideItems.map((item) => (
+            <div className="carousel-item flex-shrink-0 w-1/4" key={item.id}>
+              <a href="#">
+                <div className="carousel-item-content flex flex-col mx-4">
+                  <img
+                    className="carousel-image w-full h-48 object-cover"
+                    src={item.img}
+                    alt={item.title}
+                  />
+                  <h3 className="carousel-title text-lg font-bold">
+                    {item.title}
+                  </h3>
+                  <p className="carousel-description">{item.description}</p>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      );
+
+      carouselItems.push(slide);
+    }
+
+    return carouselItems;
+  };
+
+  const handleNextSlide = () => {
+    if (swipeableViewsRef.current) {
+      swipeableViewsRef.current.slideNext();
+    }
+  };
+
+  const handlePrevSlide = () => {
+    if (swipeableViewsRef.current) {
+      swipeableViewsRef.current.slidePrev();
+    }
+  };
+
   return (
     <>
       <Space className="flex flex-col items-center mx-64 mt-24">
@@ -40,35 +80,23 @@ const LandingNews = () => {
         </div>
       </Space>
 
-      {/* Make me a div that have yellow background*/}
-      <Space className="h-[40rem] flex flex-col items-center w-full">
-        <Space className="h-[20rem] bg-white w-full">{""}</Space>
-
-        <div className="relative w">
-          <div
-            className="h-[28rem] flex justify-center items-center 
-          w-screen absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          >
-            {school.map((item) => (
-              <div
-                className={`flex w-[22%] flex-col mx-10 justify-end items-center 
-              bg-cover bg-no-repeat h-full shadow-inner`}
-                style={{
-                  backgroundImage: `url(${item.img})`,
-                  boxShadow: "inset 0 -60px 70px 50px rgba(0, 0, 0, 0.6)",
-                }}
-              >
-                <div className="uppercase text-white w-4/5 text-3xl mb-4 font-semibold text-center">
-                  {item.title}
-                </div>
-                <div className="uppercase text-xl text-white font-semibold mb-5">
-                  {item.catchphrase}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Space>
+      <div className="h-96 w-10/12 my-24 mx-40">
+        <AutoPlaySwipeableViews
+          interval={3000} // Set the interval for auto-play in milliseconds
+          style={{
+            height: "100%",
+            width: "100%",
+          }}
+          enableMouseEvents={false} // Disable mouse events
+          slideStyle={{ overflow: "visible" }} // Ensure content is visible outside the slide
+          slideClassName="focus:outline-none" // Remove focus outline on slides
+          resistance // Enable resistance effect on swiping
+          resistanceFactor={0.5} // Set resistance factor for swiping
+          innerRef={swipeableViewsRef} // Assign the ref to the SwipeableViews component
+        >
+          {renderCarouselItems()}
+        </AutoPlaySwipeableViews>
+      </div>
     </>
   );
 };

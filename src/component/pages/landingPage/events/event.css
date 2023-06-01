@@ -1,0 +1,11 @@
+.skew-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: yellow;
+    transform: skewX(-12deg);
+    z-index: -1;
+  }
+  
