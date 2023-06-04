@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import React, { useRef } from "react";
 
 import SwipeableViews from "react-swipeable-views";
@@ -36,11 +36,9 @@ const LandingEvents = () => {
                     </Title>
                   </div>
                 </div>
-                <div className="flex flex-col items-start pl-8">
-                  <Title>{item.title}</Title>
-                  <Text>
-                    {item.startTime} - {item.endTime}
-                  </Text>
+                <div className="flex flex-col items-start pl-10 pt-6">
+                  <Title level={3}>{item.title}</Title>
+                  <Text></Text>
                   <Paragraph>{item.location}</Paragraph>
                 </div>
               </a>
@@ -55,21 +53,27 @@ const LandingEvents = () => {
     return carouselItems;
   };
   return (
-    <div className="h-96 w-10/12 my-24 mx-40">
-      <SwipeableViews
-        style={{
-          height: "100%",
-          width: "100%",
-        }}
-        slideStyle={{ overflow: "visible" }} // Ensure content is visible outside the slide
-        slideClassName="focus:outline-none" // Remove focus outline on slides
-        resistance // Enable resistance effect on swiping
-        resistanceFactor={0.5} // Set resistance factor for swiping
-        innerRef={swipeableViewsRef} // Assign the ref to the SwipeableViews component
-      >
-        {renderCarouselItems()}
-      </SwipeableViews>
-    </div>
+    <>
+      <div className="h-96 w-10/12 mt-24 mx-40">
+        <SwipeableViews
+          style={{
+            width: "100%",
+          }}
+          slideStyle={{ overflow: "visible" }} // Ensure content is visible outside the slide
+          slideClassName="focus:outline-none" // Remove focus outline on slides
+          resistance // Enable resistance effect on swiping
+          resistanceFactor={0.5} // Set resistance factor for swiping
+          innerRef={swipeableViewsRef} // Assign the ref to the SwipeableViews component
+        >
+          {renderCarouselItems()}
+        </SwipeableViews>
+      </div>
+
+      <div className="w-full flex justify-center items-center">
+        <Button>View More Events</Button>
+        <Button>View More Story</Button>
+      </div>
+    </>
   );
 };
 

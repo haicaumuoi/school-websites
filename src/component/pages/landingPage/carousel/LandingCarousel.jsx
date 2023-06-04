@@ -1,9 +1,8 @@
-import { Button, Carousel, Image } from "antd";
+import { Carousel } from "antd";
 import React from "react";
 import img1 from "./img/img-1.jpg";
 import img2 from "./img/img-2.jpg";
 import img3 from "./img/img-3.jpg";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 const LandingCarousel = () => {
   const imgList = [
@@ -24,20 +23,14 @@ const LandingCarousel = () => {
     },
   ];
 
-  const prevButton = <Button shape="circle" icon={<LeftOutlined />} />;
-  const nextButton = <Button shape="circle" icon={<RightOutlined />} />;
-
   return (
     <Carousel
-      className="h-[40rem]"
+      className="h-[40rem] relative"
       accessibility
       autoplay
       infinite
       adaptiveHeight
-      arrows
       draggable
-      prevArrow={prevButton}
-      nextArrow={nextButton}
     >
       {imgList.map((item) => (
         <div

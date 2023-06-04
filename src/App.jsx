@@ -8,6 +8,7 @@ import config from "./component/config";
 import DefaultLayout from "./component/layouts/DefaultLayout";
 import LandingPage from "./component/pages/landingPage/LandingPage";
 import adminRoutes from "./component/routes/routes";
+import { yellow } from "@ant-design/colors";
 
 function App() {
   // Get the current theme
@@ -38,7 +39,7 @@ function App() {
         token: {
           colorBgBase: "#fff",
           colorBgLayout: "#fff",
-          colorPrimary: "#ffec3d",
+          colorPrimary: yellow[5],
           colorTextHeading: "#000",
           colorTextBase: "#000",
         },
