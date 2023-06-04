@@ -65,7 +65,7 @@ const LandingNews = () => {
 
   return (
     <>
-      <Space className="flex flex-col items-center mx-64 mt-24">
+      <Space className="flex flex-col items-center mx-64 mt-10">
         <Title level={4} color={grey.primary} className="uppercase">
           News & Events
         </Title>
@@ -80,7 +80,7 @@ const LandingNews = () => {
         </div>
       </Space>
 
-      <div className="h-96 w-10/12 my-24 mx-40">
+      <div className="h-96 w-10/12 mt-24  mx-40">
         <AutoPlaySwipeableViews
           interval={3000} // Set the interval for auto-play in milliseconds
           style={{

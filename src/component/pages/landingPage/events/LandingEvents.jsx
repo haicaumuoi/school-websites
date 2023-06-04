@@ -54,7 +54,7 @@ const LandingEvents = () => {
   };
   return (
     <>
-      <div className="h-96 w-10/12 mt-24 mx-40">
+      <div className="h-80 w-10/12 mt-14 mx-40">
         <SwipeableViews
           style={{
             width: "100%",
