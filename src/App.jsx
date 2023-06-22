@@ -8,7 +8,7 @@ import config from "./component/config";
 import DefaultLayout from "./component/layouts/DefaultLayout";
 import LandingPage from "./component/pages/landingPage/LandingPage";
 import adminRoutes from "./component/routes/routes";
-import { yellow } from "@ant-design/colors";
+import { blue, green, red, yellow } from "@ant-design/colors";
 
 function App() {
   // Get the current theme
@@ -38,8 +38,10 @@ function App() {
         algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
         token: {
           colorBgBase: "#fff",
+          colorBgContainer: "fff",
+          colorPrimaryBg: blue[5],
           colorBgLayout: "#fff",
-          colorPrimary: yellow[5],
+          colorPrimary: blue[5],
           colorTextHeading: "#000",
           colorTextBase: "#000",
         },

@@ -1,4 +1,4 @@
-import { Carousel, Image, Space, Typography } from "antd";
+import { Carousel, Image, Space, Typography, theme } from "antd";
 import React from "react";
 import picture from "./img/img1.jpg";
 
@@ -6,7 +6,7 @@ import {
   SampleNextArrow,
   SamplePrevArrow,
 } from "../../../utilities/styling/arrows";
-import { grey } from "@ant-design/colors";
+import { grey, yellow } from "@ant-design/colors";
 
 const { Text, Title } = Typography;
 
@@ -48,6 +48,9 @@ const LandingBeacon = () => {
     background: "#364d79",
   };
 
+  const { useToken } = theme;
+  const { token } = useToken();
+
   return (
     <>
       <Space className="flex flex-col items-center mx-64 mt-24">
@@ -55,16 +58,21 @@ const LandingBeacon = () => {
           Testimonial
         </Title>
         <Title>Become a Beacon</Title>
-        <div className="relative mt-2">
-          <div
-            className="absolute h-10 w-80 bottom-0 left-1/2 transform -translate-x-1/2 bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('https://www.isd191.org/uploaded/themes/default_20/images/heading-background.svg')`,
-            }}
-          ></div>
-        </div>
+        <Space
+          style={{
+            backgroundColor: token.colorPrimaryBg,
+          }}
+          className="relative h-[10px] w-44 -skew-x-[56deg] mb-4"
+        >
+          <Space className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-center bg-no-repeat"></Space>
+        </Space>
       </Space>
-      <div className="w-10/12 mx-auto mt-24 bg-yellow-400 h-[35rem]">
+      <div
+        style={{
+          backgroundColor: token.colorPrimaryBg,
+        }}
+        className="w-10/12 mx-auto mt-24 h-[35rem]"
+      >
         <Carousel draggable className="h-[35rem]">
           {school.map((item) => (
             <div className="h-[35rem] relative">

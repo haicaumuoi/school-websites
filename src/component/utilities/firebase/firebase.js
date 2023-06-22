@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { FacebookAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
+import { useDispatch } from "react-redux";
+import { login } from "../../../redux/slices/authSlice";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,7 +18,7 @@ const firebaseConfig = {
   storageBucket: "school-alumni-swd.appspot.com",
   messagingSenderId: "965481444328",
   appId: "1:965481444328:web:eec99358e7b11e5731aa5d",
-  measurementId: "G-0TB3LF3F3M"
+  measurementId: "G-0TB3LF3F3M",
 };
 
 // Initialize Firebase
@@ -26,33 +29,17 @@ const analytics = getAnalytics(app);
 const googleProvider = new GoogleAuthProvider();
 
 const auth = getAuth();
-const googleSignIn = () => { signInWithPopup(auth, googleProvider)
+const googleSignIn = (dispatch) => { signInWithPopup(auth, googleProvider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-    console.log(token)
+    const token = credential.idToken;
+
+   dispatch(login({token}));
+
   }).catch((error) => {
+    return null;
   })};
 
-//FACEBOOK SIGN IN
-const fbProvider = new FacebookAuthProvider();
-const facebookSignIn = () => {signInWithPopup(auth, fbProvider)
-  .then((result) => {
-    // The signed-in user info.
+  export { googleSignIn };
 
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  })
-  .catch((error) => {
-  })};
-
-
-export { googleSignIn, facebookSignIn };

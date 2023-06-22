@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Typography, theme } from "antd";
 import React, { useRef } from "react";
 
 import SwipeableViews from "react-swipeable-views";
@@ -11,6 +11,9 @@ const LandingEvents = () => {
   const swipeableViewsRef = useRef(null);
 
   const itemsPerSlide = 4;
+
+  const { useToken } = theme;
+  const { token } = useToken();
 
   const renderCarouselItems = () => {
     const totalItems = events.length;
@@ -29,7 +32,12 @@ const LandingEvents = () => {
               <a href="#" className="flex justify-center">
                 <div className="flex flex-col justify-center items-center py-4">
                   <div className="relative">
-                    <div className="skew-background px-10" />
+                    <div
+                      style={{
+                        backgroundColor: token.colorPrimaryBg,
+                      }}
+                      className="skew-background px-10"
+                    />
                     <Text>{item.month}</Text>
                     <Title paddingXXS marginXXS delete copyable={false}>
                       {item.date}

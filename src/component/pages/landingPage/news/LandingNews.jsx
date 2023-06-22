@@ -1,5 +1,5 @@
-import { grey } from "@ant-design/colors";
-import { Space, Typography } from "antd";
+import { grey, yellow } from "@ant-design/colors";
+import { Space, Typography, theme } from "antd";
 import React, { useRef } from "react";
 import { news } from "./newsConst";
 import SwipeableViews from "react-swipeable-views";
@@ -63,6 +63,9 @@ const LandingNews = () => {
     }
   };
 
+  const { useToken } = theme;
+  const { token } = useToken();
+
   return (
     <>
       <Space className="flex flex-col items-center mx-64 mt-10">
@@ -70,14 +73,14 @@ const LandingNews = () => {
           News & Events
         </Title>
         <Title>One91 Stories</Title>
-        <div className="relative mt-2">
-          <div
-            className="absolute h-10 w-80 bottom-0 left-1/2 transform -translate-x-1/2 bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('https://www.isd191.org/uploaded/themes/default_20/images/heading-background.svg')`,
-            }}
-          ></div>
-        </div>
+        <Space
+          style={{
+            backgroundColor: token.colorPrimaryBg,
+          }}
+          className="relative h-[10px] w-44 -skew-x-[56deg] mb-4"
+        >
+          <Space className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-center bg-no-repeat"></Space>
+        </Space>
       </Space>
 
       <div className="h-96 w-10/12 mt-24  mx-40">
