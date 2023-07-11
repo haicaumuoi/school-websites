@@ -1,8 +1,10 @@
 import { Button, Typography } from "antd";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { googleSignIn } from "../../utilities/firebase/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import _ from "lodash";
 
 const { Title } = Typography;
 
@@ -13,6 +15,19 @@ const Login = () => {
   const additionalPath = pathSegments.slice(1).join(" / ");
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.authReducer.user);
+  const navigate = useNavigate();
+  console.log(user);
+  useEffect(() => {
+    if(_.get(user, "schoolId") != -1 && _.get(user, "schoolId") != null) {
+    navigate("/");
+    } else if (_.get(user, "schoolId") == -1){
+      navigate("/register");
+    } else {
+      return;
+    }
+}, [user]);
+  
   return (
     <Typography>
       <Title>Login{additionalPath && ` - ${additionalPath}`}</Title>

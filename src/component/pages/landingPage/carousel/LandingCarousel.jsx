@@ -1,4 +1,4 @@
-import { Carousel } from "antd";
+import { Carousel, Image } from "antd";
 import React from "react";
 import img1 from "./img/img-1.jpg";
 import img2 from "./img/img-2.jpg";
@@ -40,7 +40,7 @@ const LandingCarousel = () => {
           }}
           key={item.id}
         >
-          <img
+          <Image
             className=" bg-cover bg-no-repeat"
             src={item.img}
             alt={item.title}

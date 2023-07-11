@@ -7,18 +7,6 @@ import FooterComponent from "./Footer";
 const { Content } = Layout;
 
 const DefaultLayout = ({ children }) => {
-  const location = useLocation();
-  const pathSegments = location.pathname.split("/").filter(Boolean);
-
-  const breadcrumbItems = pathSegments.map((segment, index) => {
-    const breadcrumbPath = `/${pathSegments.slice(0, index + 1).join("/")}`;
-    return {
-      title: segment,
-      path: breadcrumbPath,
-      isCurrent: index === pathSegments.length - 1,
-    };
-  });
-
   return (
     <Layout className="min-h-screen">
       <HeaderComponent />
