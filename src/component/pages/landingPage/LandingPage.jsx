@@ -1,19 +1,11 @@
+import { Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDarkMode } from "../../../redux/slices/darkModeSlice";
 import LandingBeacon from "./beacon/LandingBeacon";
 import LandingCarousel from "./carousel/LandingCarousel";
-import LandingEvents from "./events/LandingEvents";
 import LandingExperiences from "./experience/LandingExperiences";
-import LandingNews from "./news/LandingNews";
 
 const LandingPage = () => {
-  const isDarkMode = useSelector((state) => state.darkMode);
-  const dispatch = useDispatch();
-
-  const handleToggleDarkMode = () => {
-    dispatch(toggleDarkMode());
-  };
-
   return (
     <>
       <section>
@@ -25,16 +17,9 @@ const LandingPage = () => {
       </section>
 
       <section>
-        <LandingNews />
-      </section>
-
-      <section>
-        <LandingEvents />
-      </section>
-
-      <section>
         <LandingBeacon />
       </section>
+      <Divider className="mt-24 w-10/12" />
     </>
   );
 };

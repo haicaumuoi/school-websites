@@ -1,3 +1,4 @@
+import { blue } from "@ant-design/colors";
 import { ConfigProvider, theme } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,8 +8,7 @@ import "./App.css";
 import config from "./component/config";
 import DefaultLayout from "./component/layouts/DefaultLayout";
 import LandingPage from "./component/pages/landingPage/LandingPage";
-import adminRoutes from "./component/routes/routes";
-import { blue, green, red, yellow } from "@ant-design/colors";
+import { notRegisterRoutes, registeredRoutes } from "./component/routes/routes";
 
 function App() {
   // Get the current theme
@@ -19,18 +19,16 @@ function App() {
 
   const [routeList, setRouteList] = useState([]);
   const authenticated = true;
-  const userType = "admin";
-
+  const login = useSelector((state) => state.authReducer?.user?.schoolId);
+  
   // Update routeList based on userType
   useEffect(() => {
-    switch (userType) {
-      case "admin":
-        setRouteList(adminRoutes);
-        break;
-      default:
-        break;
+    if(login != null && login != -1) {
+      setRouteList(registeredRoutes);
+    } else {
+      setRouteList(notRegisterRoutes);
     }
-  }, [userType]);
+  }, [login]);
 
   return (
     <ConfigProvider

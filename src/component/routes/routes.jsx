@@ -1,9 +1,12 @@
 import config from "../config";
 import LandingPage from "../pages/landingPage/LandingPage";
 import RegisterPage from "../pages/landingPage/Register";
+import EventDetailPage from "../view/events/EventDetailPage";
+import EventsPage from "../view/events/EventsPage";
 import Home from "../view/home/Home";
 import Login from "../view/login/Login";
-import Test1 from "../view/test1/Test1";
+import NewsPage from "../view/news/NewsPage";
+import ProfilePage from "../view/profile/ProfilePage";
 
 
 const landingPageRoute = {
@@ -22,14 +25,29 @@ const registerRoutes = {
     path: config.routes.register,
     component: RegisterPage,
 }
-const abcRoutes = {
-    path: config.routes.abc,
-    component: Test1,
+const newsRoutes = {
+    path: config.routes.news,
+    component: NewsPage,
 }
 
-// const superAdminRoutes = [...classAdminRoutes, userListRoutes, userPermissionRoutes]
-const adminRoutes = [landingPageRoute, homeRoutes, loginRoutes, abcRoutes, registerRoutes]
-export default adminRoutes;
+const eventsRoutes = {
+    path: config.routes.events,
+    component: EventsPage,
+}
+const eventsDetailRoutes = {
+    path: config.routes.eventDetail,
+    component: EventDetailPage,
+}
+const personalDetailRoutes = {
+    path: config.routes.profile,
+    component: ProfilePage,
+}
 
-// export { superAdminRoutes, classAdminRoutes, trainerRoutes, studentRoutes };
+
+
+const notRegisterRoutes = [landingPageRoute, loginRoutes, registerRoutes]
+const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes, eventsRoutes, eventsDetailRoutes]
+export { notRegisterRoutes, registeredRoutes };
+
+
 

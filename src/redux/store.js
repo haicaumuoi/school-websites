@@ -10,6 +10,8 @@ import persistedSchoolSlice from "./slices/schoolSlice";
 import persistedGradeReducer from "./slices/gradeSlice";
 import persistedNewsReducer from "./slices/newSlice";
 import persistedClassReducer from "./slices/classSice";
+import persistedProfileReducer from "./slices/profileSlice";
+import persistedEventsReducer from "./slices/eventSlice";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +26,8 @@ const rootReducer = combineReducers({
   gradeReducer: persistedGradeReducer,
   classReducer: persistedClassReducer,
   newReducer: persistedNewsReducer,
+  eventReducer: persistedEventsReducer,
+  profileReducer: persistedProfileReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

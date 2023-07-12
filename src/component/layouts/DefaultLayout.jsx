@@ -1,8 +1,7 @@
+import { Layout } from "antd";
 import React from "react";
-import { Layout, Breadcrumb, Divider } from "antd";
-import { useLocation, Link } from "react-router-dom";
-import HeaderComponent from "./Header";
 import FooterComponent from "./Footer";
+import HeaderComponent from "./Header";
 
 const { Content } = Layout;
 
@@ -15,7 +14,7 @@ const DefaultLayout = ({ children }) => {
           <Content className="py-4">{children}</Content>
         </Layout>
       </Layout>
-      <Divider className="mt-24 w-10/12" />
+
       <FooterComponent />
     </Layout>
   );

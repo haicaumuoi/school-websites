@@ -5,28 +5,34 @@ import storage from 'redux-persist/lib/storage';
 import { addNotification } from '../../component/utilities/commonServices/CommonService';
 
 const initialState = {
-  news: [],
+  news: {},
 };
 export const getNews = createAsyncThunk(
   "alumnis/getNews",
   async (data, thunkAPI) => {
-    console.log(data.token, data);
     try {
       const res = await axios.get(
         "https://alumniproject.azurewebsites.net/alumni/api/news",
         {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${data.token}`,
               Accept: "*/*"
+            },
+            params: {
+              pageNo: data.pageNo,
+              pageSize: 6,
             }
           }
       );
-      return res.data.items;
+      return res.data;
     } catch (err) {
       addNotification("error", "", "Get news failed");
     }
   }
 );
+
+
+
 
 
 const newSlice = createSlice({
@@ -43,7 +49,7 @@ const newSlice = createSlice({
       })
       .addCase(getNews.pending, (state) => {
         state.news = null;
-      });
+      })
   },
 });
 

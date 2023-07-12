@@ -72,31 +72,36 @@ const RegisterPage = () => {
 
 
   return (
-    <div>
-      <Select
-        style={{
-          width: 120,
-        }}
-        onChange={(value) => {
-          setGradeValue(value);
-        }}
-        options={gradeListFormat}
-      />
-      <Select
-        style={{
-          width: 120,
-        }}
-        onChange={(value) => {
-          setClassValue(value);
-        }}
-        options={classListFormat}
-        disabled={!gradeValue}
-        loading={classListPending}
-      />
-
-      <button className="w-full" onClick={sendRequest}>Send request to class</button>
-
+    <div className="h-screen w-screen bg-opacity-75 bg-cover bg-center flex items-center justify-center bg-blend-darken" style={{ backgroundImage: "url('https://cdn.memiah.co.uk/uploads/counselling-directory.org.uk/image_gallery/fotografierende-333oj7zFsdg-unsplash-1592414589-1603440321-hero.jpg')" }}>
+    <div className="bg-black bg-opacity-80 py-8 px-4 text-white h-full w-full flex justify-center items-center">
+      <div className="w-full max-w-md">
+        <div className="flex items-center mb-4">
+          <Select
+            className="mr-2 w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200"
+            onChange={(value) => {
+              setGradeValue(value);
+            }}
+            options={gradeListFormat}
+          />
+          <Select
+           className='w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200'
+            onChange={(value) => {
+              setClassValue(value);
+            }}
+            options={classListFormat}
+            disabled={!gradeValue}
+            loading={classListPending}
+          />
+        </div>
+  
+        <button className="w-full py-2 px-4 bg-white text-gray-800 rounded-md hover:bg-gray-200" onClick={sendRequest}>
+          Send request to class
+        </button>
+      </div>
     </div>
+  </div>
+  
+
   )
 }
 
