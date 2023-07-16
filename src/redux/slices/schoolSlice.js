@@ -6,29 +6,30 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Define the initial state with the new schema
 const initialState = {
-  name: '',
-  description: '',
-  subDomain: '',
-  backGround1: '',
-  backGround2: '',
-  backGround3: '',
-  icon: '',
-  provinceName: '',
-  cityName: '',
-  address: '',
-  theme: '',
-  endTime: '',
+  school: {
+    name: '',
+    description: '',
+    subDomain: '',
+    backGround1: '',
+    backGround2: '',
+    backGround3: '',
+    icon: '',
+    provinceName: '',
+    cityName: '',
+    address: '',
+    theme: '',
+    endTime: ''
+  },
+  schoolLoading: false,
 };
 
-export const getSchoolList = createAsyncThunk(
+export const getSchool = createAsyncThunk(
     "school/school_list",
     async (params, thunkAPI) => {
-      const { page, rowsPerPage, token } = params;
       try {
-        const res = await axios.get(`https://alumniproject.azurewebsites.net/api/alumni/schools/subDomain?subDomain=${subDomain}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "*/*"
+        const res = await axios.get(`https://alumniproject.azurewebsites.net/alumni/api/schools/subDomain`, {
+          params: {
+            subDomain: "fpt.vercel"
           }
         });
         return res.data;
@@ -37,8 +38,7 @@ export const getSchoolList = createAsyncThunk(
       }
     }
   );
-  
-  // Update the remaining createAsyncThunk actions in a similar way
+
   
 // Create the school slice
 const schoolSlice = createSlice({
@@ -47,8 +47,12 @@ const schoolSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
       builder
-        .addCase(getSchoolList.pending, (state) => {
-          state.loading = true;
+        .addCase(getSchool.fulfilled, (state, action) => {
+          state.schoolLoading = false;
+          state.school = action.payload;
+        })
+        .addCase(getSchool.pending, (state) => {
+          state.schoolLoading = true;
         })
     }
   });
