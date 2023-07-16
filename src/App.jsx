@@ -24,8 +24,8 @@ function App() {
   const school = useSelector((state) => state.schoolReducer.school);
   const schoolLoading = useSelector((state) => state.schoolReducer.schoolLoading);
 
-  const location = useLocation();
-  console.log(location.pathname)
+  const location = window.location.hostname;
+  console.log(location)
 
   const dispatch = useDispatch();
 
