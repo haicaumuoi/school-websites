@@ -25,11 +25,11 @@ const initialState = {
 
 export const getSchool = createAsyncThunk(
     "school/school_list",
-    async (params, thunkAPI) => {
+    async (data, thunkAPI) => {
       try {
         const res = await axios.get(`https://alumniproject.azurewebsites.net/alumni/api/schools/subDomain`, {
           params: {
-            subDomain: "fpt.vercel"
+            subDomain: data.location
           }
         });
         return res.data;

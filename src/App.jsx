@@ -25,7 +25,6 @@ function App() {
   const schoolLoading = useSelector((state) => state.schoolReducer.schoolLoading);
 
   const location = window.location.hostname;
-  console.log(location)
 
   const dispatch = useDispatch();
 
@@ -39,12 +38,12 @@ function App() {
   }, [login]);
 
   useEffect(() => {
-    dispatch(getSchool());
+    dispatch(getSchool({ location }));
   }, []);
 
   if (schoolLoading) return <>
     <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900">Loading...</div>
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
   </>;
 
