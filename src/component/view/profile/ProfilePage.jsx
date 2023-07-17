@@ -38,7 +38,7 @@ const ProfilePage = () => {
       <Row gutter={[32, 32]}>
         <Col span={6}>
           <Card>
-            <Avatar size={128} src={profile.avatar_url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'} />
+            <Avatar size={128} src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png' />
             <h1 className="mt-4 text-xl font-bold">{profile.fullName}</h1>
             <p className="mt-2">{profile.bio}</p>
           </Card>
