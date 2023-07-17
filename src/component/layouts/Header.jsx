@@ -10,22 +10,23 @@ const { Header } = Layout;
 
 const HeaderComponent = () => {
   const login = useSelector((state) => state.authReducer?.user?.schoolId);
+  const school = useSelector((state) => state.schoolReducer.school);
   return (
     <Header className="flex justify-between items-center h-24 bg-white">
       {login != null && login != -1 ? (
         <>
-        <Link to="/home">
-          <img width={100} src={schoolLogo} />
-        </Link>
-        
-        <LoginMenu />
+          <Link to="/home">
+            <img width={100} src={school.icon || schoolLogo} />
+          </Link>
+
+          <LoginMenu />
         </>
       ) : (
         <>
-        <Link to="/">
-          <img width={100} src={schoolLogo} />
-        </Link>
-        <DefaultMenu />
+          <Link to="/">
+            <img width={100} src={school.icon || schoolLogo} />
+          </Link>
+          <DefaultMenu />
         </>
       )}
     </Header>

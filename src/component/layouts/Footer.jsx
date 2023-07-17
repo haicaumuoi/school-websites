@@ -9,6 +9,7 @@ import {
 import { Button, Space, Typography } from "antd";
 import React from "react";
 import schoolLogo from "../../assets/school-logo.png";
+import { useSelector } from "react-redux";
 
 const { Text, Title } = Typography;
 const IconFont = createFromIconfontCN({
@@ -16,16 +17,15 @@ const IconFont = createFromIconfontCN({
 });
 
 const FooterComponent = () => {
+  const school = useSelector((state) => state.schoolReducer.school);
   return (
     <div className="h-[30rem] flex justify-between flex-col items-center">
       <div className="flex justify-between items-center w-10/12 h-3/4 mb-14">
         <div className="">
           <img width={100} src={schoolLogo} />
           <Space direction="vertical" className="mt-2">
-            <Text>Burnsville-Eagan-Savage School District 191</Text>
-            <Text>Diamondhead Education Center</Text>
-            <Text>200 W. Burnsville Pkwy</Text>
-            <Text>Burnsville Minnesota 55337</Text>
+            <Text>{school.address}</Text>
+            <Text>{school.provinceName}</Text>
             <Text>Phone: 952-707-2000</Text>
           </Space>
         </div>

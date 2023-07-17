@@ -28,6 +28,8 @@ function App() {
 
   const dispatch = useDispatch();
 
+  console.log("school", school)
+
   // Update routeList based on userType
   useEffect(() => {
     if (login != null && login != -1) {

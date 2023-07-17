@@ -7,28 +7,27 @@ import {
   SamplePrevArrow,
 } from "../../../utilities/styling/arrows";
 import { grey, yellow } from "@ant-design/colors";
+import { useSelector } from "react-redux";
 
 const { Text, Title } = Typography;
 
 const LandingBeacon = () => {
-  const school = [
+  const school = useSelector((state) => state.schoolReducer.school);
+  const schoolBeacon = [
     {
-      title: "Elementary School",
-      catchphrase:
-        "Burnsville High School Burnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High School",
-      img: picture,
+      title: school.name,
+      catchphrase: school.description,
+      img: school.backGround1 || picture,
     },
     {
-      title: "Secondary School",
-      catchphrase:
-        "Burnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High School",
-      img: picture,
+      title: school.name,
+      catchphrase: school.description,
+      img: school.backGround2 || picture,
     },
     {
-      title: "High School",
-      catchphrase:
-        "Burnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High SchoolBurnsville High School",
-      img: picture,
+      title: school.name,
+      catchphrase: school.description,
+      img: school.backGround3 || picture,
     },
   ];
 
@@ -59,7 +58,7 @@ const LandingBeacon = () => {
         className="w-10/12 mx-auto mt-24 h-[35rem]"
       >
         <Carousel draggable className="h-[35rem]">
-          {school.map((item) => (
+          {schoolBeacon.map((item) => (
             <div className="h-[35rem] relative">
               <Space direction="vertical" className="w-10/12 justify-end">
                 <div

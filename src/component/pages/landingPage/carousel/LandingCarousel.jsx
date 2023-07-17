@@ -3,22 +3,24 @@ import React from "react";
 import img1 from "./img/img-1.jpg";
 import img2 from "./img/img-2.jpg";
 import img3 from "./img/img-3.jpg";
+import { useSelector } from "react-redux";
 
 const LandingCarousel = () => {
+  const school = useSelector((state) => state.schoolReducer.school);
   const imgList = [
     {
       id: 1,
-      img: img1,
+      img: school.backGround1 || img1,
       title: "img1",
     },
     {
       id: 2,
-      img: img2,
+      img: school.backGround2 || img2,
       title: "img2",
     },
     {
       id: 3,
-      img: img3,
+      img: school.backGround3 || img3,
       title: "img3",
     },
   ];
