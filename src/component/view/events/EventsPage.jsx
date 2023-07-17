@@ -30,7 +30,6 @@ const EventsPage = () => {
         setEvents(eventsData.items);
       }
       setLoading(false);
-      setLoading(false);
     });
   }, [pageNo]);
 
