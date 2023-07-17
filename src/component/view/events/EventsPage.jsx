@@ -24,7 +24,12 @@ const EventsPage = () => {
 
   useEffect(() => {
     dispatch(getEvents({ token, pageNo })).then(() => {
-      setEvents(eventsData?.items);
+      if (events) {
+        setEvents(events.concat(newsData.items));
+      } else {
+        setEvents(eventsData.items);
+      }
+      setLoading(false);
       setLoading(false);
     });
   }, [pageNo]);
