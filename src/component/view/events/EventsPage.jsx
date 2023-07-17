@@ -48,7 +48,7 @@ const EventsPage = () => {
                 className="w-full h-72 max-h-72"
                 cover={
                   <div>
-                    <img alt="example" src={eventItem.imageUrl} className="object-cover h-56 w-full max-h-full" />
+                    <img alt="example" src={eventItem.imageUrl || "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg"} className="object-cover h-56 w-full max-h-full" />
                   </div>
                 }
                 hoverable

@@ -60,6 +60,7 @@ function App() {
           colorPrimary: school.theme,
           colorTextHeading: "#000",
           colorTextBase: "#000",
+
         },
       }}
     >

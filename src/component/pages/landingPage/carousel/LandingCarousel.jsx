@@ -64,7 +64,7 @@ const LandingCarousel = () => {
     //     </div>
     //   ))}
     // </Carousel>
-    <Carousel autoplay dotPosition={dotPosition} dots accessibility arrows draggable>
+    <Carousel autoplay dotPosition={dotPosition} dots accessibility draggable>
       {imgList.map((item) => (
         <div
           className="h-[40rem] w-[100%] flex justify-center items-center"
