@@ -13,20 +13,20 @@ const HeaderComponent = () => {
   const school = useSelector((state) => state.schoolReducer.school);
   return (
     <Header className="flex justify-between items-center h-24 bg-white">
-      {login != null || login != -1 ? (
+      {login !== null || login != -1 ? (
         <>
           <Link to="/home">
             <img width={100} src={school.icon || schoolLogo} />
           </Link>
+          <DefaultMenu />
 
-          <LoginMenu />
         </>
       ) : (
         <>
           <Link to="/">
             <img width={100} src={school.icon || schoolLogo} />
           </Link>
-          <DefaultMenu />
+          <LoginMenu />
         </>
       )}
     </Header>
