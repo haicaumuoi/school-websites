@@ -23,11 +23,11 @@ export const login = createAsyncThunk(
         }
       );
       const decode = jwt_decode(res.data);
-      
+      console.log(decode.schoolId, schoolId)
       if(decode && decode.schoolId == schoolId) {
         addNotification("success","", "Login successfully");
         const tokenReturn = res.data;
-        return {decode, tokenReturn}; 
+        return { decode, tokenReturn }; 
       } else {
         addNotification("error","", "You've already registered to a different school");
         return null;
@@ -38,23 +38,47 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  "alumnis/logout",
+  async (_, thunkAPI) => {
+    try {
+      addNotification("success", "", "Logout successful");
+      return;
+    } catch (err) {
+      addNotification("error", "", "Logout failed");
+      throw err;
+    }
+  }
+);
+
 const loginSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(login.fulfilled, (state, action) => {
-      state.user = action.payload.decode;
-      state.token = action.payload.tokenReturn;
-      state.loginState = true;
-    })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload.decode;
+        state.token = action.payload.tokenReturn;
+        state.loginState = true;
+      })
       .addCase(login.rejected, (state) => {
         state.loginState = false;
         state.userState = null;
       })
       .addCase(login.pending, (state) => {
         state.loginState = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loginState = false;
+        state.user = null;
+        state.token = null;
+      })
+      .addCase(logout.rejected, (state) => {
+        // Handle any specific error cases if needed
+      })
+      .addCase(logout.pending, (state) => {
+        // Handle any specific pending state if needed
       });
   },
 });
