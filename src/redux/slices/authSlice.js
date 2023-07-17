@@ -13,17 +13,25 @@ const initialState = {
 
 export const login = createAsyncThunk(
   "alumnis/login",
-  async (token, thunkAPI) => {
+  async (data, thunkAPI) => {
+    const { token, schoolId } = data;
     try {
       const res = await axios.post(
         "https://alumniproject.azurewebsites.net/api/alumnis/login",
-        token
+        {
+          token: token,
+        }
       );
       const decode = jwt_decode(res.data);
-      if(decode)
-      addNotification("success","", "Login successfully");
-      const tokenReturn = res.data;
-      return {decode, tokenReturn}; 
+      
+      if(decode && decode.schoolId == schoolId) {
+        addNotification("success","", "Login successfully");
+        const tokenReturn = res.data;
+        return {decode, tokenReturn}; 
+      } else {
+        addNotification("error","", "You've already registered to a different school");
+        return null;
+      }
     } catch (err) {
       addNotification("error","", "Login failed");
     }

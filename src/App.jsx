@@ -34,7 +34,8 @@ function App() {
   useEffect(() => {
     if (login != null && login != -1) {
       setRouteList(registeredRoutes);
-    } else {
+    }
+    else {
       setRouteList(notRegisterRoutes);
     }
   }, [login]);
@@ -49,10 +50,9 @@ function App() {
     </div>
   </>;
 
-  if (school && login && school.id != login) {
-    navigate('/error');
-    addNotification("error", "", "You are not authorized to access this school");
-  };
+  // Empty dependency array
+
+
 
   return (
     <ConfigProvider

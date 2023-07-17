@@ -22,13 +22,14 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 
-const googleSignIn = (dispatch) => { signInWithPopup(auth, googleProvider)
+const googleSignIn = (data) => { signInWithPopup(auth, googleProvider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.idToken;
+    const {dispatch, schoolId}  = data;
 
-   dispatch(login({token}));
+   dispatch(login({token, schoolId}));
 
   }).catch((error) => {
     return null;
