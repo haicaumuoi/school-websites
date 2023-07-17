@@ -40,30 +40,6 @@ const LandingCarousel = () => {
   };
 
   return (
-    // <Carousel
-    //   className="h-[40rem]"
-    //   accessibility
-    //   autoplay
-    //   infinite
-    //   adaptiveHeight
-    //   draggable
-    // >
-    //   {imgList.map((item) => (
-    //     <div
-    //       className="h-[40rem] w-full flex justify-center items-center"
-    //       style={{
-    //         backgroundImage: `url(${school.backGround2})`,
-    //         backgroundSize: 'cover',
-    //         backgroundRepeat: 'no-repeat',
-    //         boxShadow: "inset 0 -60px 70px 50px rgba(0, 0, 0, 0.6)",
-    //       }}
-    //       key={item.id}
-    //     >
-    //       {/* Optional: If you want to show the image content inside the div, you can use the <Image> component */}
-    //       <Image className="w-full h-full" src={item.img} alt={item.title} />
-    //     </div>
-    //   ))}
-    // </Carousel>
     <Carousel autoplay dotPosition={dotPosition} dots accessibility draggable>
       {imgList.map((item) => (
         <div

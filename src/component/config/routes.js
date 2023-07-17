@@ -8,6 +8,7 @@ const routes = {
   news: "/news",
   newsDetail: "/news/:id",
   profile: "/profile",
+  errorSchool: "/error"
 };
 
 export default routes;

@@ -2,7 +2,7 @@ import { blue } from "@ant-design/colors";
 import { ConfigProvider, theme } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import config from "./component/config";
@@ -10,6 +10,7 @@ import DefaultLayout from "./component/layouts/DefaultLayout";
 import LandingPage from "./component/pages/landingPage/LandingPage";
 import { notRegisterRoutes, registeredRoutes } from "./component/routes/routes";
 import { getSchool } from "./redux/slices/schoolSlice";
+import { addNotification } from "./component/utilities/commonServices/CommonService";
 
 function App() {
   // Get the current theme
@@ -27,6 +28,7 @@ function App() {
   const location = window.location.hostname;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Update routeList based on userType
   useEffect(() => {
@@ -47,6 +49,10 @@ function App() {
     </div>
   </>;
 
+  if (school && login && school.id != login) {
+    navigate('/error');
+    addNotification("error", "", "You are not authorized to access this school");
+  };
 
   return (
     <ConfigProvider

@@ -1,6 +1,7 @@
 import config from "../config";
 import LandingPage from "../pages/landingPage/LandingPage";
 import RegisterPage from "../pages/landingPage/Register";
+import SchoolErrorPage from "../view/SchoolErrorPage";
 import EventDetailPage from "../view/events/EventDetailPage";
 import EventsPage from "../view/events/EventsPage";
 import Home from "../view/home/Home";
@@ -42,10 +43,13 @@ const personalDetailRoutes = {
     path: config.routes.profile,
     component: ProfilePage,
 }
+const schoolErrorRoutes = {
+    path: config.routes.errorSchool,
+    component: SchoolErrorPage,
+}
 
 
-
-const notRegisterRoutes = [landingPageRoute, loginRoutes, registerRoutes]
+const notRegisterRoutes = [landingPageRoute, loginRoutes, registerRoutes, schoolErrorRoutes]
 const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes, eventsRoutes, eventsDetailRoutes]
 export { notRegisterRoutes, registeredRoutes };
 

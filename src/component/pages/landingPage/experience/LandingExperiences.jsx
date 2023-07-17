@@ -1,31 +1,14 @@
 import { grey } from "@ant-design/colors";
 import { Space, Typography, theme } from "antd";
 import React from "react";
-import picture from "./img/img.jpg";
 import { useSelector } from "react-redux";
 
 const { Text, Title } = Typography;
 
 const LandingExperiences = () => {
-  const school1 = [
-    {
-      title: "Elementary School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-    {
-      title: "Secondary School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-    {
-      title: "High School",
-      catchphrase: "Burnsville High School",
-      img: picture,
-    },
-  ];
 
   const school = useSelector((state) => state.schoolReducer.school);
+  const schoolAttributes = school.attributes;
 
 
   const { useToken } = theme;
@@ -68,22 +51,20 @@ const LandingExperiences = () => {
             className="h-[28rem] flex justify-center items-center 
           w-screen absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           >
-            {school1.map((item) => (
+            {schoolAttributes.map((item) => (
               <div
                 key={item.title}
                 className={`flex w-[22%] flex-col mx-10 justify-end items-center 
               bg-cover bg-no-repeat h-full shadow-inner`}
                 style={{
-                  backgroundImage: `url(${school.backGround1})`,
+                  backgroundImage: `url(${item.img})`,
                   boxShadow: "inset 0 -60px 70px 50px rgba(0, 0, 0, 0.6)",
                 }}
               >
                 <div className="uppercase text-white w-4/5 text-3xl mb-4 font-semibold text-center">
-                  {item.title}
+                  {item.descption}
                 </div>
-                <div className="uppercase text-xl text-white font-semibold mb-5">
-                  {item.catchphrase}
-                </div>
+
               </div>
             ))}
           </div>
