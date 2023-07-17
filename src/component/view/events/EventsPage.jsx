@@ -12,24 +12,27 @@ const EventsPage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const eventsData = useSelector((state) => state.eventReducer.events);
+  const eventsData = useSelector((state) => state.eventReducer?.events);
   const [pageNo, setPageNo] = useState(1);
 
+
   useEffect(() => {
-    if (!login) {
+    if (!token) {
       navigate('/');
     }
   }, []);
 
   useEffect(() => {
     dispatch(getEvents({ token, pageNo })).then(() => {
-      setEvents(eventsData.items);
+      setEvents(eventsData?.items);
       setLoading(false);
     });
   }, [pageNo]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+    </div>;
   }
 
   return (

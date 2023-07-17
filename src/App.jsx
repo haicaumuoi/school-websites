@@ -2,7 +2,7 @@ import { blue } from "@ant-design/colors";
 import { ConfigProvider, theme } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import config from "./component/config";
@@ -27,8 +27,6 @@ function App() {
   const location = window.location.hostname;
 
   const dispatch = useDispatch();
-
-  console.log("school", school)
 
   // Update routeList based on userType
   useEffect(() => {
@@ -71,22 +69,26 @@ function App() {
             <Route path={config.routes.landingPage} element={<LandingPage />} />
           </>
         ) : (
-          routeList.map((route, index) => {
-            const Page = route.component;
-            const Layout = DefaultLayout;
+          <>
+            <Route path="*" element={<Navigate to="/" />} />
+            {
+              routeList.map((route, index) => {
+                const Page = route.component;
+                const Layout = DefaultLayout;
 
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    }
+                  />
+                );
+              })}
+          </>
         )}
       </Routes>
     </ConfigProvider>

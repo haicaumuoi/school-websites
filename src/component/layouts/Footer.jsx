@@ -22,7 +22,7 @@ const FooterComponent = () => {
     <div className="h-[30rem] flex justify-between flex-col items-center">
       <div className="flex justify-between items-center w-10/12 h-3/4 mb-14">
         <div className="">
-          <img width={100} src={schoolLogo} />
+          <img width={100} src={school.icon} />
           <Space direction="vertical" className="mt-2">
             <Text>{school.address}</Text>
             <Text>{school.provinceName}</Text>

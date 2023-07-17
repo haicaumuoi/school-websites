@@ -12,24 +12,8 @@ import { useSelector } from "react-redux";
 const { Text, Title } = Typography;
 
 const LandingBeacon = () => {
-  const school = useSelector((state) => state.schoolReducer.school);
-  const schoolBeacon = [
-    {
-      title: school.name,
-      catchphrase: school.description,
-      img: school.backGround1 || picture,
-    },
-    {
-      title: school.name,
-      catchphrase: school.description,
-      img: school.backGround2 || picture,
-    },
-    {
-      title: school.name,
-      catchphrase: school.description,
-      img: school.backGround3 || picture,
-    },
-  ];
+  const school = useSelector((state) => state.schoolReducer?.school);
+  const schoolBeacon = school?.cardInSchool
 
 
   const { useToken } = theme;
@@ -66,9 +50,9 @@ const LandingBeacon = () => {
               flex ml-10 flex-col mt-14 items-center justify-evenly pr-32"
                 >
                   <Text className="text-lg w-2/3 text-center">
-                    {item.catchphrase}
+                    {item.description}
                   </Text>
-                  <Title level={3}>{item.title}</Title>
+                  <Title level={3}>{item.name}</Title>
                 </div>
 
                 <div className="absolute top-32 right-0 transform -translate-y-12 -translate-x-12">

@@ -40,6 +40,7 @@ const LandingExperiences = () => {
         <Title
           style={{
             marginBottom: "0px",
+            textTransform: "uppercase",
           }}
         >
           {school.name}

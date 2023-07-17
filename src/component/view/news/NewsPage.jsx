@@ -17,16 +17,9 @@ const NewsPage = () => {
     state: false,
     id: null,
   });
-  const skeleton = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-  ];
+
   useEffect(() => {
-    if (!login) {
+    if (!token) {
       navigate('/');
     }
   }, []);
@@ -47,28 +40,8 @@ const NewsPage = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-20 m-8">
-        <div className="flex justify-center items-center w-full">
-          <Typography.Title level={2}>News</Typography.Title>
-        </div>
-        <div className="grid grid-cols-3 gap-14 m-8">
-          <div >
-            <Card
-              className="w-full h-72 max-h-72"
-              cover={
-                <Skeleton.Image
-                  className="object-cover h-full w-full max-h-full"
-                  style={{ width: '100%', height: '100%' }}
-                  active
-                />
-              }
-              hoverable
-            >
-              <Meta />
-            </Card>
-          </div>
-
-        </div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
   }
@@ -111,21 +84,22 @@ const NewsPage = () => {
             </Modal>
           </div>
         ))}
-        {newsData?.hasNextPage && (
-          <div className="flex justify-center items-center w-full">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                setPageNo(pageNo + 1);
-                setLoading(true);
-              }}
-            >
-              Load More
-            </button>
-          </div>
 
-        )}
       </div>
+      {newsData?.hasNextPage && (
+        <div className="flex justify-center items-center w-full">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              setPageNo(pageNo + 1);
+              setLoading(true);
+            }}
+          >
+            Load More
+          </button>
+        </div>
+
+      )}
     </div >
 
   );

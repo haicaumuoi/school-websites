@@ -1,5 +1,5 @@
 import { Carousel, Image } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import img1 from "./img/img-1.jpg";
 import img2 from "./img/img-2.jpg";
 import img3 from "./img/img-3.jpg";
@@ -25,31 +25,69 @@ const LandingCarousel = () => {
     },
   ];
 
+  const contentStyle = {
+    margin: 0,
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
+
+  const [dotPosition, setDotPosition] = useState('bottom');
+  const handlePositionChange = ({ target: { value } }) => {
+    setDotPosition(value);
+  };
+
   return (
-    <Carousel
-      className="h-[40rem] relative"
-      accessibility
-      autoplay
-      infinite
-      adaptiveHeight
-      draggable
-    >
+    // <Carousel
+    //   className="h-[40rem]"
+    //   accessibility
+    //   autoplay
+    //   infinite
+    //   adaptiveHeight
+    //   draggable
+    // >
+    //   {imgList.map((item) => (
+    //     <div
+    //       className="h-[40rem] w-full flex justify-center items-center"
+    //       style={{
+    //         backgroundImage: `url(${school.backGround2})`,
+    //         backgroundSize: 'cover',
+    //         backgroundRepeat: 'no-repeat',
+    //         boxShadow: "inset 0 -60px 70px 50px rgba(0, 0, 0, 0.6)",
+    //       }}
+    //       key={item.id}
+    //     >
+    //       {/* Optional: If you want to show the image content inside the div, you can use the <Image> component */}
+    //       <Image className="w-full h-full" src={item.img} alt={item.title} />
+    //     </div>
+    //   ))}
+    // </Carousel>
+    <Carousel autoplay dotPosition={dotPosition} dots accessibility arrows draggable>
       {imgList.map((item) => (
         <div
-          className="h-[40rem] flex justify-center items-center bg-cover bg-no-repeat shadow-inner"
+          className="h-[40rem] w-[100%] flex justify-center items-center"
           style={{
+            backgroundImage: `url(${school.backGround2})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
             boxShadow: "inset 0 -60px 70px 50px rgba(0, 0, 0, 0.6)",
           }}
           key={item.id}
         >
-          <Image
-            className=" bg-cover bg-no-repeat"
-            src={item.img}
-            alt={item.title}
-          />
+          {/* Optional: If you want to show the image content inside the div, you can use the <Image> component */}
+
+          <img style={{
+            width: '100%',
+            display: 'block',
+            height: '100%',
+          }} className="w-full h-full" src={item.img} alt={item.title} />
+
         </div>
       ))}
-    </Carousel>
+    </Carousel >
+
   );
 };
 
