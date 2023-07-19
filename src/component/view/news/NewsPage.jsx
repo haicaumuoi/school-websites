@@ -1,4 +1,4 @@
-import { Card, Modal, Typography } from 'antd';
+import { Card, Image, Modal, Typography } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 const NewsPage = () => {
   const token = useSelector((state) => state.authReducer.token);
-  const schoolTheme = useSelector((state) => state.schoolReducer?.school?.theme);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [news, setNews] = useState([]);
@@ -18,6 +17,7 @@ const NewsPage = () => {
   });
 
   const [newsData, setNewsData] = useState({});
+  const [firstRender, setFirstRender] = useState(true);
 
   const fetchNews = async () => {
     try {
@@ -37,6 +37,9 @@ const NewsPage = () => {
       setLoading(false);
       setNews((prevNews) => [...prevNews, ...res.data.items]);
       setNewsData(res.data);
+      if (firstRender) {
+        setFirstRender(false);
+      }
     } catch (err) {
       setLoading(false);
       // Handle error here
@@ -55,7 +58,8 @@ const NewsPage = () => {
 
 
 
-  if (loading) {
+
+  if (firstRender) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
@@ -95,17 +99,18 @@ const NewsPage = () => {
                   visible={modalOpen.state === true && modalOpen.id === newsItem.id}
                   onCancel={() => setModalOpen(false)}
                   width="80%"
-                  okButtonProps={{
-                    className: "text-white",
-                    style: {
-                      backgroundColor: schoolTheme,
-                    },
+                  closable
+                  footer={null}
+                  bodyStyle={{
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    paddingTop: '10px'
                   }}
-                  onOk={() => setModalOpen(false)}
-                  className="news-modal"
                 >
-                  <img src={newsItem?.newsImageUrl} alt="" srcSet="" className="modal-image" />
-                  <p>{newsItem?.content}</p>
+                  <Image src={newsItem?.newsImageUrl} alt="" srcSet="" className="modal-image rounded-lg w-1/3" />
+                  <Typography className='w-2/3'>{newsItem?.content}</Typography>
+
                 </Modal>
               </div>
             ))}
@@ -119,17 +124,24 @@ const NewsPage = () => {
         )}
 
         {newsData?.hasNextPage && (
-          <div className="flex justify-center items-center w-full">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                setPageNo(pageNo + 1);
-                setLoading(true);
-              }}
-            >
-              Load More
-            </button>
-          </div>
+          loading ? (
+            <div className="flex justify-center items-center h-20 mt-20" >
+              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center w-full">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={
+                  () => {
+                    setPageNo(pageNo + 1);
+                    setLoading(true);
+                  }}
+              >
+                Load More
+              </button>
+            </div >
+          )
         )}
       </div >
 

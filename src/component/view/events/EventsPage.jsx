@@ -13,6 +13,7 @@ const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [eventsData, setEventsData] = useState({});//[hasNextPage, hasPreviousPage, items, pageNo, pageSize, totalCount
   const [pageNo, setPageNo] = useState(1);
+  const [firstRender, setFirstRender] = useState(true);
 
 
   useEffect(() => {
@@ -39,6 +40,9 @@ const EventsPage = () => {
       setLoading(false);
       setEventsData(res.data);
       setEvents((prevEvents) => [...prevEvents, ...res.data.items]);
+      if (firstRender) {
+        setFirstRender(false);
+      }
     } catch (err) {
       setLoading(false);
       // Handle error here
@@ -51,7 +55,7 @@ const EventsPage = () => {
 
 
 
-  if (loading) {
+  if (firstRender) {
     return <div className="flex justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>;
@@ -81,18 +85,26 @@ const EventsPage = () => {
           </div>
         ))}
       </div>
+
       {eventsData?.hasNextPage && (
-        <div className="flex justify-center items-center w-full">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => {
-              setPageNo(pageNo + 1);
-              setLoading(true);
-            }}
-          >
-            Load More
-          </button>
-        </div>
+        loading ? (
+          <div className="flex justify-center items-center h-20 mt-20" >
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center w-full">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={
+                () => {
+                  setPageNo(pageNo + 1);
+                  setLoading(true);
+                }}
+            >
+              Load More
+            </button>
+          </div >
+        )
       )}
     </div>
   );
