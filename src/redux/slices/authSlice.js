@@ -23,7 +23,6 @@ export const login = createAsyncThunk(
         }
       );
       const decode = jwt_decode(res.data);
-      console.log(decode.schoolId, schoolId)
       if(decode && decode.schoolId == schoolId) {
         addNotification("success","", "Login successfully");
         const tokenReturn = res.data;

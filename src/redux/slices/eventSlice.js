@@ -7,6 +7,7 @@ import { addNotification } from '../../component/utilities/commonServices/Common
 const initialState = {
   events: {},
   eventDetail: {},
+  loading: false,
 };
 
 export const getEvents = createAsyncThunk(
@@ -66,23 +67,30 @@ const eventSlice = createSlice({
     builder
     .addCase(getEvents.fulfilled, (state, action) => {
       state.events = action.payload;
+      state.loading = false;
     })
     .addCase(getEvents.rejected, (state) => {
         state.events = null;
+        state.loading = false;
+
       })
     .addCase(getEvents.pending, (state) => {
         state.events = null;
+        state.loading = true;
       })
       .addCase(getEventDetail.fulfilled, (state, action) => {
         state.eventDetail = action.payload;
+        state.loading = false;
       }
       )
         .addCase(getEventDetail.rejected, (state) => {
           state.eventDetail = null;
+          state.loading = false;
         }
         )
         .addCase(getEventDetail.pending, (state) => {
           state.eventDetail = null;
+          state.loading = true;
         }
         );
   

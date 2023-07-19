@@ -4,15 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getEvents } from '../../../redux/slices/eventSlice';
 import { Card, Typography } from 'antd';
 import Meta from 'antd/es/card/Meta';
+import axios from 'axios';
 
 const EventsPage = () => {
   const token = useSelector((state) => state.authReducer.token);
-  const login = useSelector((state) => state.authReducer?.user?.schoolId);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const eventsData = useSelector((state) => state.eventReducer?.events);
+  const [eventsData, setEventsData] = useState({});//[hasNextPage, hasPreviousPage, items, pageNo, pageSize, totalCount
   const [pageNo, setPageNo] = useState(1);
 
 
@@ -22,16 +21,35 @@ const EventsPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(getEvents({ token, pageNo })).then(() => {
-      if (events) {
-        setEvents(events.concat(newsData.items));
-      } else {
-        setEvents(eventsData.items);
-      }
+  const fetchEvents = async () => {
+    try {
+      const res = await axios.get(
+        'https://alumniproject.azurewebsites.net/alumni/api/events',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: '*/*',
+          },
+          params: {
+            pageNo: pageNo,
+            pageSize: 6,
+          },
+        }
+      );
       setLoading(false);
-    });
-  }, [pageNo]);
+      setEventsData(res.data);
+      setEvents((prevEvents) => [...prevEvents, ...res.data.items]);
+    } catch (err) {
+      setLoading(false);
+      // Handle error here
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, [token, pageNo]);
+
+
 
   if (loading) {
     return <div className="flex justify-center items-center h-screen">
@@ -47,35 +65,35 @@ const EventsPage = () => {
       <div className="grid grid-cols-3 gap-14 m-8">
         {events?.map((eventItem, index) => (
           <div key={index}>
-            <Link to={`/events/${eventItem.id}`}>
+            <Link to={`/events/${eventItem?.id}`}>
               <Card
                 className="w-full h-72 max-h-72"
                 cover={
                   <div>
-                    <img alt="example" src={eventItem.imageUrl || "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg"} className="object-cover h-56 w-full max-h-full" />
+                    <img alt="example" src={eventItem?.imageUrl || "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg"} className="object-cover h-56 w-full max-h-full" />
                   </div>
                 }
                 hoverable
               >
-                <Meta title={eventItem.title} />
+                <Meta title={eventItem?.title} />
               </Card>
             </Link>
           </div>
         ))}
-        {eventsData?.hasNextPage && (
-          <div className="flex justify-center items-center w-full">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                setPageNo(pageNo + 1);
-                setLoading(true);
-              }}
-            >
-              Load More
-            </button>
-          </div>
-        )}
       </div>
+      {eventsData?.hasNextPage && (
+        <div className="flex justify-center items-center w-full">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              setPageNo(pageNo + 1);
+              setLoading(true);
+            }}
+          >
+            Load More
+          </button>
+        </div>
+      )}
     </div>
   );
 };

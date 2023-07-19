@@ -28,7 +28,6 @@ function App() {
   const location = window.location.hostname;
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // Update routeList based on userType
   useEffect(() => {
@@ -50,9 +49,6 @@ function App() {
     </div>
   </>;
 
-
-  console.log(login)
-  // Empty dependency array
 
 
 
