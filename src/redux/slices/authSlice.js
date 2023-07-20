@@ -27,6 +27,10 @@ export const login = createAsyncThunk(
         addNotification("success","", "Login successfully");
         const tokenReturn = res.data;
         return { decode, tokenReturn }; 
+      } else if(decode.schoolId == -1) {
+        addNotification("info","", "Please register");
+        const tokenReturn = res.data;
+        return {tokenReturn, decode};
       } else {
         addNotification("error","", "You've already registered to a different school");
         return null;

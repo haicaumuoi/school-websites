@@ -14,7 +14,7 @@ const HeaderComponent = () => {
 
   return (
     <Header className="flex justify-between items-center h-24 bg-white">
-      {login !== undefined && login !== null && login !== -1 ? (
+      {login !== undefined && login !== null && login != -1 ? (
         <>
           <Link to="/home">
             <img width={100} src={school.icon || schoolLogo} />
