@@ -44,7 +44,12 @@ const RegisterPage = () => {
           addNotification("success", "", "Send request successfully");
         })
         .catch((err) => {
-          addNotification("error", "", "Send request failed");
+          if (err.response.status == 409) {
+            addNotification("error", "", "You already send request to this class");
+            return;
+          } else {
+            addNotification("error", "", "Send request failed");
+          }
         });
     }
   };
