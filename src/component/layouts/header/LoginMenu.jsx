@@ -19,9 +19,13 @@ const LoginMenu = () => {
       <Menu.Item key="2" className="font-black text-xl uppercase">
         <Link to="/events">Events</Link>
       </Menu.Item>
+      <Menu.Item key="4" className="font-black text-xl uppercase">
+        <Link to="/school">School</Link>
+      </Menu.Item>
       <Menu.Item key="3" className="font-black text-xl uppercase">
         <Link to="/profile">Profile</Link>
       </Menu.Item>
+
 
       <Menu.Item key="5" className="font-black text-xl uppercase" onClick={() => {
         dispatch(logout())

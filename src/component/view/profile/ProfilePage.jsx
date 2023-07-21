@@ -6,6 +6,7 @@ import { EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { addNotification } from '../../utilities/commonServices/CommonService';
 
 const ProfilePage = () => {
   const token = useSelector((state) => state.authReducer.token);
@@ -14,6 +15,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
   const schoolTheme = useSelector((state) => state.schoolReducer?.school?.theme);
+  const profileId = location.pathname.split('/')[2];
 
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const ProfilePage = () => {
     }
   }, []);
 
-  const fetchProfileData = async () => {
+  const fetchPersonalData = async () => {
     try {
       const res = await axios.get(
         'https://alumniproject.azurewebsites.net/alumni/api/alumnis',
@@ -36,14 +38,42 @@ const ProfilePage = () => {
       setProfile(res.data);
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching profile data:', err);
+      addNotification('error', '', err.message);
       setLoading(false);
     }
   };
-  useEffect(() => {
 
-    fetchProfileData();
-  }, [token]);
+  const fetchAlumniData = async () => {
+    try {
+      const res = await axios.get(
+        'https://alumniproject.azurewebsites.net/alumni/api/alumnis/info',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: '*/*',
+          },
+          params: {
+            alumniId: profileId,
+          },
+        }
+      );
+      setProfile(res.data);
+      setLoading(false);
+    } catch (err) {
+      addNotification('error', '', err.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (profileId) {
+      setLoading(true)
+      fetchAlumniData(profileId);
+    } else {
+      setLoading(true)
+      fetchPersonalData();
+    }
+  }, [token, profileId]);
 
   if (loading) {
     return (
@@ -56,16 +86,17 @@ const ProfilePage = () => {
   return (
     <div className="container mx-auto my-8 max-w-screen-2xl">
       <Row gutter={[32, 32]}>
-        <Col xs={24} md={9}>
+        <Col xs={24} md={9} className='h-full'>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
+            className='h-full'
           >
-            <div className="flex flex-col items-center -ml-16 pl-8" >
-              <Card style={{ backgroundColor: schoolTheme }}>
+            <div className="flex flex-col items-center -ml-16 pl-8 min-w-[30%] h-full" >
+              <Card style={{ backgroundColor: schoolTheme }} className='w-full h-full'>
                 <div className="my-4 ml-8 text-xl font-bold">{profile.fullName}</div>
-                <div className="ml-8 font-light">{profile.bio}</div>
+                <div className="ml-8 font-light">{profile.bio || "No Bio"}</div>
               </Card>
             </div>
           </motion.div>
@@ -75,6 +106,7 @@ const ProfilePage = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
+            className='h-full'
           >
             <Avatar
               size={180}
@@ -85,13 +117,14 @@ const ProfilePage = () => {
             />
           </motion.div>
         </Col>
-        <Col xs={24} md={9} className='overflow-clip'>
+        <Col xs={24} md={9} className='overflow-clip h-full' >
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
+
           >
-            <Card className='-mr-16' style={{ backgroundColor: schoolTheme }}>
+            <Card className='-mr-16 w-full' style={{ backgroundColor: schoolTheme }}>
               <h2 className="text-xl font-bold mb-4">Contact Information</h2>
               <Row gutter={[8, 8]} >
                 <Col xs={24}>

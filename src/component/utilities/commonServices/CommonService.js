@@ -9,13 +9,11 @@ export function addNotification(type, title, message, config) {
     else showMessage = toast;
     showMessage(message, {
       position: "bottom-right",
-      autoClose: 5000,
+      autoClose: 3000,
       newestOnTop: true,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnFocusLoss: true,
       pauseOnHover: true,
-      draggable: true,
       progress: undefined,
       theme: "colored",
       ...config,

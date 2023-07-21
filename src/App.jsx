@@ -71,11 +71,11 @@ function App() {
       <Routes>
         {!authenticated ? (
           <>
-            <Route path={config.routes.landingPage} element={<LandingPage />} />
+            <Route path={config.routes.landingPage} element={<Navigate to="/" />} />
           </>
         ) : (
           <>
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" />
             {
               routeList.map((route, index) => {
                 const Page = route.component;

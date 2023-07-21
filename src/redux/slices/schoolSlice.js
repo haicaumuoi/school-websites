@@ -29,7 +29,7 @@ export const getSchool = createAsyncThunk(
       try {
         const res = await axios.get(`https://alumniproject.azurewebsites.net/alumni/api/schools/subDomain`, {
           params: {
-            subDomain: data.location
+            subDomain: 'school-websites-fpt.vercel.app'
           }
         });
         return res.data;

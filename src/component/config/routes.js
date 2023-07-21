@@ -4,11 +4,13 @@ const routes = {
   home: "/home",
   register: "/register",
   events: "/events",
-  eventDetail: "/events/:id",
   news: "/news",
   newsDetail: "/news/:id",
+  school: "/school",
+  schoolDetail: "/school/:id",
   profile: "/profile",
-  errorSchool: "/error"
+  alumni: "/profile/:id",
+  errorSchool: "/error",
 };
 
 export default routes;

@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-const EventDetailPage = () => {
+const NewsDetailPage = () => {
   const location = useLocation();
   const id = location.pathname.split('/')[2];
   const [eventDetail, setEventDetail] = useState({});
   const token = useSelector((state) => state.authReducer?.token);
   const [loading, setLoading] = useState(true);
+
 
   const fetchEventDetail = async () => {
     try {
@@ -101,4 +102,4 @@ const EventDetailPage = () => {
   }
 }
 
-export default EventDetailPage
+export default NewsDetailPage
