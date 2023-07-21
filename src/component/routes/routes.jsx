@@ -37,8 +37,8 @@ const eventsRoutes = {
     path: config.routes.events,
     component: EventsPage,
 }
-const eventsDetailRoutes = {
-    path: config.routes.eventDetail,
+const newsDetailRoutes = {
+    path: config.routes.newsDetail,
     component: NewsDetailsPage,
 }
 const personalDetailRoutes = {
@@ -65,7 +65,7 @@ const schoolDetailRoutes = {
 
 
 const notRegisterRoutes = [landingPageRoute, loginRoutes, registerRoutes, schoolErrorRoutes]
-const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes, eventsRoutes, eventsDetailRoutes, schoolRoutes, schoolDetailRoutes, alumniDetailRoutes]
+const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes, eventsRoutes, newsDetailRoutes, schoolRoutes, schoolDetailRoutes, alumniDetailRoutes]
 export { notRegisterRoutes, registeredRoutes };
 
 

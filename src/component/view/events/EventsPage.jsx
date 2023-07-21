@@ -1,8 +1,10 @@
 import {
+  CaretDownOutlined,
+  CaretUpOutlined,
   ClockCircleFilled,
   EnvironmentFilled
 } from '@ant-design/icons';
-import { Card, Modal, Typography } from 'antd';
+import { Card, Collapse, Modal, Space, Typography } from 'antd';
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import moment from 'moment';
@@ -24,6 +26,13 @@ const EventsPage = () => {
     state: false,
     id: null,
   });
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleToggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
 
 
   useEffect(() => {
@@ -133,24 +142,63 @@ const EventsPage = () => {
                   paddingTop: '10px'
                 }}
               >
-                <div className='flex justify-evenly mx-4 w-full mt-3'>
-                  <div className='flex flex-col items-center text-black w-fit py-8 px-8 rounded-2xl' style={{
-                    backgroundColor: schoolTheme
-                  }}>
-                    <div className='text-center font-bold text-xl'>{moment(eventItem?.startTime).format("MMMM")}</div>
-                    <div className='text-center font-extrabold text-6xl'>{moment(eventItem?.startTime).format("DD")}</div>
-                  </div>
-                  <div className='flex flex-col space-y-4'>
-                    <div className='text-center font-bold text-2xl'>{eventItem?.title}</div>
-                    <div className='text-center font-semibold text-lg flex space-x-4'>
-                      <div><ClockCircleFilled /></div>
-                      <div>{moment(eventItem?.startTime).format("HH:mm")} - {moment(eventItem?.endTime).format("HH:mm")}</div>
+                <div className='w-full flex flex-col items-center'>
+                  <div className='flex justify-evenly mx-4 w-full mt-3'>
+                    <div className='flex flex-col items-center text-black w-fit py-8 px-8 rounded-2xl' style={{
+                      backgroundColor: schoolTheme
+                    }}>
+                      <div className='text-center font-bold text-xl'>{moment(eventItem?.startTime).format("MMMM")}</div>
+                      <div className='text-center font-extrabold text-6xl'>{moment(eventItem?.startTime).format("DD")}</div>
                     </div>
-                    <div className='text-center font-semibold text-lg flex space-x-4'>
-                      <EnvironmentFilled />
-                      <div>{eventItem?.location}</div>
+                    <div className='flex flex-col space-y-4'>
+                      <div className='text-center font-bold text-2xl'>{eventItem?.title}</div>
+                      <div className='text-center font-semibold text-lg flex space-x-4'>
+                        <div><ClockCircleFilled /></div>
+                        <div>{moment(eventItem?.startTime).format("HH:mm")} - {moment(eventItem?.endTime).format("HH:mm")}</div>
+                      </div>
+                      <div className='text-center font-semibold text-lg flex space-x-4'>
+                        <EnvironmentFilled />
+                        <div>{eventItem?.location}</div>
+                      </div>
                     </div>
                   </div>
+                  <Collapse className='w-full' bordered={false} ghost expandIconPosition="end" activeKey={expanded ? '1' : ''}>
+                    <Collapse.Panel
+                      key="1"
+                      showArrow={false}
+                      header={
+                        <Space className='w-full flex justify-center items-center'>
+                          {/* Toggle arrow */}
+
+                          {expanded ? (
+                            <div className='w-full flex justify-center items-center' onClick={handleToggleExpand}>
+                              <div>
+                                <CaretDownOutlined />
+                              </div>
+                            </div>
+                          ) : (
+                            <span className='w-full flex justify-center items-center' onClick={handleToggleExpand}><CaretUpOutlined /></span>
+                          )}
+                        </Space>
+                      }
+                    >
+                      {/* Expanded content */}
+                      <div className='w-full'>
+                        <Typography.Paragraph>
+                          <strong>Description:</strong> {eventItem?.desciption}
+                        </Typography.Paragraph>
+                        <Typography.Paragraph>
+                          <strong>Is Offline:</strong> {eventItem?.isOffline ? 'Yes' : 'No'}
+                        </Typography.Paragraph>
+                        <Typography.Paragraph>
+                          <strong>Is Public School:</strong> {eventItem?.isPublicSchool ? 'Yes' : 'No'}
+                        </Typography.Paragraph>
+                        <Typography.Paragraph>
+                          <strong>Host Name:</strong> {eventItem?.hostName}
+                        </Typography.Paragraph>
+                      </div>
+                    </Collapse.Panel>
+                  </Collapse>
                 </div>
               </Modal>
 
