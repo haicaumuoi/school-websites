@@ -4,8 +4,11 @@ import LandingCarousel from '../../pages/landingPage/carousel/LandingCarousel'
 import LandingExperiences from '../../pages/landingPage/experience/LandingExperiences'
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const token = useSelector(state => state.authReducer.token);
+  const navigate = useNavigate();
   const [carouselRef, carouselInView] = useInView({
     triggerOnce: true,
     threshold: 0.2, // Adjust this value to control when the animation triggers
@@ -20,6 +23,11 @@ const Home = () => {
     triggerOnce: true,
     threshold: 0.2,
   });
+
+  if (!token) {
+    navigate("/");
+  }
+
   return (
     <>
       <motion.div

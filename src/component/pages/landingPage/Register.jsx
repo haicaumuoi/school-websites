@@ -15,17 +15,53 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const token = useSelector(state => state.authReducer.token);
   const user = useSelector(state => state.authReducer.user);
-  const gradeList = useSelector(state => state.gradeReducer.gradeList);
-  const gradeListFormat = _.map(gradeList, (item) => {
-    return { value: item.id, label: `${item.code}` }
-  });
-  const classList = useSelector(state => state.classReducer.classList);
-  const classListPending = useSelector(state => state.classReducer.fetchingClass);
-  const classListFormat = _.map(classList, (item) => {
-    return { value: item.id, label: `${item.name}` }
-  });
+  const [gradeList, setGradeList] = useState([]);
+  const [gradeListFormat, setGradeListFormat] = useState([]);
+  const schoolId = useSelector(state => state.schoolReducer?.school?.id);
+  const [loading, setLoading] = useState(true);
+
+  const [classList, setClassList] = useState([]);
+  const [classListPending, setGradeLoading] = useState(false);
+  const [classListFormat, setClassListFormat] = useState([]);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState([]); // Declare userData state variable, which we will use to store data from the API
+
+
+  const getGradeList = async () => {
+    try {
+      const res = await axios.get(
+        "https://alumniproject.azurewebsites.net/alumni/api/grades",
+        {
+          params: {
+            SchoolId: schoolId
+          }
+        }
+      );
+      setLoading(false);
+      setGradeList((prevNews) => [...prevNews, ...res.data]);
+    } catch (err) {
+      setLoading(false);
+      // Handle error here
+    }
+  }
+
+  const getClassList = async (id) => {
+    try {
+      const res = await axios.get(
+        "https://alumniproject.azurewebsites.net/alumni/api/classes",
+        {
+          params: {
+            gradeId: id
+          }
+        }
+      );
+      setGradeLoading(false);
+      setClassList(res.data);
+    } catch (err) {
+      addNotification("error", "", "Get class failed");
+    }
+  }
+
 
   const sendRequest = () => {
     if (!gradeValue || !classValue) {
@@ -89,68 +125,94 @@ const RegisterPage = () => {
   }, [token, user, dispatch])
 
 
+
+
   useEffect(() => {
     fetchUserData(); // Call the function to fetch data when the component mounts or the dependency array changes (if you have any dependencies).
+    getGradeList();
   }, []); // The empty dependency array ensures that the effect runs only once, equivalent to componentDidMount.
+
+  useEffect(() => {
+    setGradeListFormat(_.map(gradeList, (item) => {
+      return { value: item.id, label: `${item.code}` }
+    }))
+    if (!gradeValue) {
+      return;
+    }
+    getClassList(gradeValue);
+  }, [gradeList])
+
+  useEffect(() => {
+    setClassListFormat(_.map(classList, (item) => {
+      return { value: item.id, label: `${item.name}` }
+    }));
+  }, [classList])
+
 
 
   useEffect(() => {
     if (!gradeValue) {
       return;
     } else {
-      dispatch(getClass({
-        gradeId: gradeValue
-      }))
+      getClassList(gradeValue);
     }
   }, [gradeValue, dispatch])
 
 
-  return (
-    <div className="h-screen w-screen bg-opacity-75 bg-cover bg-center flex items-center justify-center bg-blend-darken" style={{ backgroundImage: "url('https://cdn.memiah.co.uk/uploads/counselling-directory.org.uk/image_gallery/fotografierende-333oj7zFsdg-unsplash-1592414589-1603440321-hero.jpg')" }}>
-      <div className="bg-black bg-opacity-80 py-8 px-4 text-white h-full w-full flex justify-center items-center">
-        <div className="w-full max-w-md sapce-y-8">
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="h-screen w-screen bg-opacity-75 bg-cover bg-center flex items-center justify-center bg-blend-darken" style={{ backgroundImage: "url('https://cdn.memiah.co.uk/uploads/counselling-directory.org.uk/image_gallery/fotografierende-333oj7zFsdg-unsplash-1592414589-1603440321-hero.jpg')" }}>
+        <div className="bg-black bg-opacity-80 py-8 px-4 text-white h-full w-full flex justify-center items-center">
+          <div className="w-full max-w-md sapce-y-8">
 
-          <Card
-            style={{ backgroundColor: "#fff" }}
-            className="rounded-lg overflow-hidden"
-          >
-            <div className="mb-4 flex flex-col space-y-2">
-              <Typography.Text className="font-bold">Name: {userData?.fullName || "No user name found"}</Typography.Text>
-              <Typography.Text >Email: {userData?.email}</Typography.Text>
-              {/* You can add other user details here */}
-              <Typography.Text>Date of Birth: {moment(userData?.dateOfBirth).format("MMMM Do, YYYY")}</Typography.Text>
+            <Card
+              style={{ backgroundColor: "#fff" }}
+              className="rounded-lg overflow-hidden"
+            >
+              <div className="mb-4 flex flex-col space-y-2">
+                <Typography.Text className="font-bold">Name: {userData?.fullName || "No user name found"}</Typography.Text>
+                <Typography.Text >Email: {userData?.email}</Typography.Text>
+                {/* You can add other user details here */}
+                <Typography.Text>Date of Birth: {moment(userData?.dateOfBirth).format("MMMM Do, YYYY")}</Typography.Text>
+              </div>
+            </Card>
+
+
+            <div className="flex items-center my-4">
+              <Select
+                className="mr-2 w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200"
+                onChange={(value) => {
+                  setGradeValue(value);
+                }}
+                options={gradeListFormat}
+              />
+              <Select
+                className='w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200'
+                onChange={(value) => {
+                  setClassValue(value);
+                }}
+                options={classListFormat}
+                disabled={!gradeValue}
+                loading={classListPending}
+              />
             </div>
-          </Card>
 
-
-          <div className="flex items-center my-4">
-            <Select
-              className="mr-2 w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200"
-              onChange={(value) => {
-                setGradeValue(value);
-              }}
-              options={gradeListFormat}
-            />
-            <Select
-              className='w-1/2 bg-white text-gray-800 rounded-md hover:bg-gray-200'
-              onChange={(value) => {
-                setClassValue(value);
-              }}
-              options={classListFormat}
-              disabled={!gradeValue}
-              loading={classListPending}
-            />
+            <button className="w-full py-2 px-4 bg-white text-gray-800 rounded-md hover:bg-gray-200" onClick={sendRequest}>
+              Send request to class
+            </button>
           </div>
-
-          <button className="w-full py-2 px-4 bg-white text-gray-800 rounded-md hover:bg-gray-200" onClick={sendRequest}>
-            Send request to class
-          </button>
         </div>
       </div>
-    </div>
 
 
-  )
+    )
+  }
 }
 
 export default RegisterPage
