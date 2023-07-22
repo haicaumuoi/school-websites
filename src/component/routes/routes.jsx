@@ -65,7 +65,8 @@ const schoolDetailRoutes = {
 
 
 const notRegisterRoutes = [landingPageRoute, loginRoutes, registerRoutes, schoolErrorRoutes]
-const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes, eventsRoutes, newsDetailRoutes, schoolRoutes, schoolDetailRoutes, alumniDetailRoutes]
+const registeredRoutes = [landingPageRoute, homeRoutes, personalDetailRoutes, newsRoutes,
+    eventsRoutes, newsDetailRoutes, schoolRoutes, schoolDetailRoutes, alumniDetailRoutes]
 export { notRegisterRoutes, registeredRoutes };
 
 

@@ -24,10 +24,19 @@ function App() {
   const login = useSelector((state) => state.authReducer?.user?.schoolId);
   const school = useSelector((state) => state.schoolReducer.school);
   const schoolLoading = useSelector((state) => state.schoolReducer.schoolLoading);
+  const token = useSelector(state => state.authReducer.token);
+
 
   const location = window.location.hostname;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token]);
 
   // Update routeList based on userType
   useEffect(() => {
