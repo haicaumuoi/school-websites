@@ -17,7 +17,7 @@ const HeaderComponent = () => {
     if (login !== undefined && login !== null && login != -1) {
       return (
         <>
-          <Link to="/home">
+          <Link to="/">
             <img width={100} src={school.icon || schoolLogo} />
           </Link>
           <LoginMenu />
