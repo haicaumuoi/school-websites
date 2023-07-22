@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { addNotification } from '../../utilities/commonServices/CommonService';
-import _ from "lodash";
+import _, { set } from "lodash";
 
 
 const SchoolPage = () => {
@@ -25,6 +25,9 @@ const SchoolPage = () => {
     const [classPageSize, setClassPageSize] = useState(6);
     const [classPageNo, setClassPageNo] = useState(1);
     const schoolTheme = useSelector((state) => state.schoolReducer?.school?.theme);
+    const [classNumbers, setClassNumbers] = useState({});
+    const [gradeNumber, setGradeNumber] = useState({});
+
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -58,6 +61,7 @@ const SchoolPage = () => {
             }
 
             setGrades((prevGrade) => [...prevGrade, ...res.data.items]);
+            setGradeNumber(res.data);
             setGradeLoading(false);
         } catch (err) {
             addNotification("error", "", "Fetch grade failed");
@@ -82,6 +86,7 @@ const SchoolPage = () => {
                 }
             );
             setClassList(res.data.items);
+            setClassNumbers(res.data);
             setClassListLoading(false);
         } catch (err) {
             addNotification("error", "", "Fetch classes failed");
@@ -204,6 +209,32 @@ const SchoolPage = () => {
                     </div>
                 )}
 
+                {gradeNumber?.hasNextPage && (
+                    loading ? (
+                        <div className="flex justify-center items-center h-20 mt-20" >
+                            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+                        </div>
+                    ) : (
+                        <div className="flex justify-center items-center w-full">
+                            <button
+                                className=" text-white font-bold py-2 px-4 rounded hover:bg-blend-darken hover:-translate-y-1 transition-all"
+                                style={{
+                                    backgroundColor: schoolTheme
+
+                                }}
+                                onClick={
+                                    () => {
+                                        setGradePageNo(pageNo + 1);
+                                        setLoading(true);
+                                    }}
+                            >
+                                Load More
+                            </button>
+                        </div >
+                    )
+                )
+                }
+
                 <div className="flex justify-center items-center w-full space-x-4 mt-20">
                     {classList && !classListLoading ? (
                         <AnimatePresence>
@@ -254,6 +285,32 @@ const SchoolPage = () => {
                             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
                         </div>
                     )}
+
+                    {classNumbers?.hasNextPage && (
+                        loading ? (
+                            <div className="flex justify-center items-center h-20 mt-20" >
+                                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+                            </div>
+                        ) : (
+                            <div className="flex justify-center items-center w-full">
+                                <button
+                                    className=" text-white font-bold py-2 px-4 rounded hover:bg-blend-darken hover:-translate-y-1 transition-all"
+                                    style={{
+                                        backgroundColor: schoolTheme
+
+                                    }}
+                                    onClick={
+                                        () => {
+                                            setClassPageNo(pageNo + 1);
+                                            setLoading(true);
+                                        }}
+                                >
+                                    Load More
+                                </button>
+                            </div >
+                        )
+                    )
+                    }
                 </div>
             </div >
         )

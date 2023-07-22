@@ -13,17 +13,17 @@ const NewsDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   const colorList = [
-    red,
-    cyan,
-    geekblue,
-    green,
-    lime,
-    magenta,
-    orange,
-    purple,
-    red,
-    volcano,
-    yellow,
+    red[5],
+    cyan[5],
+    geekblue[5],
+    green[5],
+    lime[5],
+    magenta[5],
+    orange[5],
+    purple[5],
+    red[5],
+    volcano[5],
+    yellow[5],
   ]
 
   const fetchNewDetail = async () => {
@@ -82,7 +82,7 @@ const NewsDetailPage = () => {
             <div>
               {newsDetail.tags && newsDetail.tags.length > 0 ? (
                 newsDetail.tags.map((tag) => {
-                  const randomIndex = tag.id % 7; // Use ID to randomly select a color
+                  const randomIndex = tag.id % 11; // Use ID to randomly select a color
                   return (
                     <Tag key={tag.id} color={colorList[randomIndex]}>
                       {tag.tagName}
